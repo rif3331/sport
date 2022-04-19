@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <title></title>
+    <style>
+img {
+  opacity: 0.7;
+}
+
+img:hover {
+  opacity: 1.0;
+}
+.img {
+  opacity: 1.0;
+}
+body{
+    font-family: Audiowide;
+}
+.stretch {
+    background:  no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    direction:rtl;
+}
+</style>
+    <script type="text/javascript">
+        function formatApiAllCountries() {
+            var countriesArrayId = [];
+            var countriesArrayName = [];
+            var countriesArrayFlag = [];
+            fetch('https://api-basketball.p.rapidapi.com/countries', deatlsApi())
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var authors = data;
+                    var myArray = JSON.stringify(authors).split('},');
+                    var tempArray = myArray[0].split('response":[');
+                    myArray[0] = tempArray[1];
+                    for (var i = 0; i < myArray.length; i++) {
+                        if (i == myArray.length - 1) { break; }
+                       
+                        countriesArrayId[countriesArrayId.length] = splitByTwo(myArray[i], 'id":', ",");
+                        countriesArrayName[countriesArrayName.length] = splitByTwo(myArray[i], 'name":"', '",');
+                        try {
+                            countriesArrayFlag[countriesArrayFlag.length] = splitByTwo(myArray[i], 'flag":"', ',');
+                            countriesArrayFlag[countriesArrayFlag.length - 1]= countriesArrayFlag[countriesArrayFlag.length - 1].slice(0, countriesArrayFlag[countriesArrayFlag.length - 1].length-1)
+                        }
+                        catch{
+                            countriesArrayFlag[countriesArrayFlag.length] = "null";
+                        };
+                        if (countriesArrayName[countriesArrayName.length - 1] == "Europe") {
+                            countriesArrayFlag[countriesArrayFlag.length - 1] = "https://www.uci-portugal.co.il/wp-content/uploads/europe-155191_640-600x398.png.webp";
+                        }
+                        if (countriesArrayName[countriesArrayName.length - 1] == "Asia") {
+                            countriesArrayFlag[countriesArrayFlag.length - 1] = "https://thumbs.dreamstime.com/b/asia-icon-asia-icon-continent-map-dark-background-stylish-asia-map-continent-name-vector-illustration-169049597.jpg";
+                        }
+                        if (countriesArrayName[countriesArrayName.length - 1] == "World") {
+                            countriesArrayFlag[countriesArrayFlag.length - 1] = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/FIBA_Basketball_World_Cup_logo.svg/2560px-FIBA_Basketball_World_Cup_logo.svg.png";
+                        }
+                    }
+
+                    openTableCountries(countriesArrayFlag, countriesArrayId, countriesArrayName);
+                })
+        }
+        function formatApiBets(teamLink) {
+            fetch('https://api-basketball.p.rapidapi.com/' + teamLink, deatlsApi())
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var authors = data;
+                    alert(JSON.stringify(authors));
+                   // var myArray = JSON.stringify(authors).split('"},"team":');
+                   // var tempArray = myArray[0].split('logo":"');
+                    myArray[0] = tempArray[1];
+                    
+                })
+        }
+        function formatApiLastGame(teamLink) {
+            var gameStatusArray = [];
+            var quarterNumberArray = [];
+            var timeArray = [];
+            var idArray = [];
+            var dateTextArray = [];
+            var dateYearArray = [];
+            var dateMonthArray = [];
+            var dateDayArray = [];
+            var dateHourArray = [];
+            var dateMinutesArray = [];
+            var homeTeamArrayId = [];
+            var homeTeamArrayName = [];
+            var homeTeamArrayLogo = [];
+            var homeTeamArrayScore = [];
+            var awayTeamArrayId = [];
+            var awayTeamArrayName = [];
+            var awayTeamArrayLogo = [];
+            var awayTeamArrayScore = [];
+            fetch('https://api-basketball.p.rapidapi.com/' + teamLink, deatlsApi())
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var authors = data;
+                    var myArray = JSON.stringify(authors).split("}}},");
+                    var tempArray = myArray[0].split('response":[');
+                    myArray[0] = tempArray[1];
+                    for (var i = 0; i < myArray.length; i++) {
+                        myArray[i] = myArray[i].replace("date", "☼"); myArray[i] = myArray[i].replace("id", "☼"); myArray[i] = myArray[i].replace("+", "☼");
+                        myArray[i] = myArray[i].replace("teams", "☼"); myArray[i] = myArray[i].replace("scores", "☼"); myArray[i] = myArray[i].replace("away", "☼");
+                        var myArray2 = myArray[i].split("☼");
+                        //alert(myArray);
+                        idArray[idArray.length] = myArray2[1].slice(2, myArray2[1].length - 2);
+                        var dateSplitArray1 = (myArray2[2].slice(3, myArray2[2].length - 3)).split("T");
+                        var dateSplitArray2 = dateSplitArray1[0].split("-");
+                        var dateSplitArray3 = dateSplitArray1[1].split(":");
+                        var hours = parseInt(parseInt(dateSplitArray3[0]) + 3);
+                        if (hours >= 24) {
+                            dateSplitArray2[2] = parseInt(parseInt(dateSplitArray2[2]) + 1);
+                            hours = hours - 24;
+                        }
+                        var tempHours = hours;
+                        if (hours < 10 && hours != "00") {
+                            hours = cheakNumberLessTen(hours)
+                        }
+                        dateTextArray[dateTextArray.length] = "בתאריך: " + dateSplitArray2[2] + "/" + dateSplitArray2[1] + "/" + dateSplitArray2[0] + " בשעה: " + hours + ":" + dateSplitArray3[1];
+                        dateYearArray[dateYearArray.length] = dateSplitArray2[0];
+                        dateMonthArray[dateMonthArray.length] = dateSplitArray2[1];
+                        dateDayArray[dateDayArray.length] = dateSplitArray2[2];
+                        var stringHomeTeamArray = myArray2[4];
+                        homeTeamArrayId[homeTeamArrayId.length] = splitByTwo(stringHomeTeamArray, 'id":', ",");
+                        homeTeamArrayName[homeTeamArrayName.length] = splitByTwo(stringHomeTeamArray, 'name":"', '",');
+                        homeTeamArrayLogo[homeTeamArrayLogo.length] = splitByTwo(stringHomeTeamArray, 'logo":"', '"}');
+                        // document.getElementById("ff").innerHTML = JSON.stringify(authors);
+                        var stringAwayTeamArray = myArray2[5];
+                        awayTeamArrayId[awayTeamArrayId.length] = splitByTwo(stringAwayTeamArray, 'id":', ",");
+                        awayTeamArrayName[awayTeamArrayName.length] = splitByTwo(stringAwayTeamArray, 'name":"', '",');
+                        awayTeamArrayLogo[awayTeamArrayLogo.length] = splitByTwo(stringAwayTeamArray, 'logo":"', '"}');
+                        gameStatusArray[gameStatusArray.length] = splitByTwo(myArray[i], 'long":"', '"');
+                        timeArray[timeArray.length] = splitByTwo(myArray[i], 'timer":', '}');
+
+                        var scores = myArray2[6].split('}');
+                        homeTeamArrayScore[homeTeamArrayScore.length] = splitByTwo(scores[0], 'total":', '}');
+                        awayTeamArrayScore[awayTeamArrayScore.length] = splitByTwo(scores[1], 'total":', '}');
+                        // alert(homeTeamArrayScore[i] + "-" + awayTeamArrayScore[i]);
+
+                    }
+                    //  alert(awayTeamArrayLogo);
+                    openGamesTable("stat",idArray, dateTextArray, homeTeamArrayId, awayTeamArrayId, homeTeamArrayName, awayTeamArrayName, homeTeamArrayLogo, awayTeamArrayLogo, dateYearArray, dateMonthArray, dateDayArray, tempHours, dateSplitArray3[1], homeTeamArrayScore, awayTeamArrayScore, gameStatusArray, timeArray);
+                })
+        }
+        function formatApiAllStat(teamLink, homeiot) {
+
+            fetch('https://api-basketball.p.rapidapi.com/' + teamLink, deatlsApi())
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var authors = data;
+                    var myArray = JSON.stringify(authors).split('"},"team":');
+                    var tempArray = myArray[0].split('logo":"');
+                    myArray[0] = tempArray[1];
+                    myArray[1] = myArray[1].replace("games", "☼"); myArray[1] = myArray[1].replace("wins", "☼");
+                    myArray[1] = myArray[1].replace("loses", "☼"); myArray[1] = myArray[1].replace("draws", "☼");
+                    myArray[1] = myArray[1].replace("points", "☼"); myArray[1] = myArray[1].replace("against", "☼");
+                    var myArray2 = myArray[1].split("☼");
+
+                    var name = splitByTwo(myArray2[0], 'name":"', '"');
+                    var logo = splitByTwo(myArray2[0], 'logo":"', '"');
+                    var countGamesAll = splitByTwo(myArray2[1], 'all":', '},');
+                    var countGamesAway = splitByTwo(myArray2[1], 'away":', ',');
+                    var countGamesHome = splitByTwo(myArray2[1], 'home":', ',');
+
+                    var countGamesHomeWinsA = (splitByTwo(myArray2[2], 'home":{"total"', '"},')).split('percentage');
+                    var countGamesAwayWinsA = (splitByTwo(myArray2[2], 'away":{"total"', '"},')).split('percentage');
+                    var countGamesALLWinsA = (splitByTwo(myArray2[2], 'all":{"total"', '"}},')).split('percentage');
+                    var countGamesHomeWins = countGamesHomeWinsA[0].slice(1, countGamesHomeWinsA[0].length - 2);
+                    var precentGamesHomeWins = countGamesHomeWinsA[1].slice(3, countGamesHomeWinsA[1].length);
+                    var countGamesAwayWins = countGamesAwayWinsA[0].slice(1, countGamesAwayWinsA[0].length - 2);
+                    var precentGamesAwayWinsA = countGamesAwayWinsA[1].slice(3, countGamesAwayWinsA[1].length);
+                    var countGamesALLWins = countGamesALLWinsA[0].slice(1, countGamesALLWinsA[0].length - 2);
+                    var precentGamesALLWinsA = countGamesALLWinsA[1].slice(3, countGamesALLWinsA[1].length);
+
+                    var countGamesHomeLosesA = (splitByTwo(myArray2[4], 'home":{"total"', '"},')).split('percentage');
+                    var countGamesAwayLosesA = (splitByTwo(myArray2[4], 'away":{"total"', '"},')).split('percentage');
+                    var countGamesALLLosesA = (splitByTwo(myArray2[4], 'all":{"total"', '"}},')).split('percentage');
+                    var countGamesHomeLoses = countGamesHomeLosesA[0].slice(1, countGamesHomeLosesA[0].length - 2);
+                    var precentGamesHomeLoses = countGamesHomeLosesA[1].slice(3, countGamesHomeLosesA[1].length);
+                    var countGamesAwayLoses = countGamesAwayLosesA[0].slice(1, countGamesAwayLosesA[0].length - 2);
+                    var precentGamesAwayLosesA = countGamesAwayLosesA[1].slice(3, countGamesAwayLosesA[1].length);
+                    var countGamesALLLoses = countGamesALLLosesA[0].slice(1, countGamesALLLosesA[0].length - 2);
+                    var precentGamesALLLosesA = countGamesALLLosesA[1].slice(3, countGamesALLLosesA[1].length - 6);
+
+                    var countGamesHomeDrawsA = (splitByTwo(myArray2[3], 'home":{"total"', '"},')).split('percentage');
+                    var countGamesAwayDrawsA = (splitByTwo(myArray2[3], 'away":{"total"', '"},')).split('percentage');
+                    var countGamesALLDrawsA = (splitByTwo(myArray2[3], 'all":{"total"', '"}},')).split('percentage');
+                    //  alert(countGamesHomeWinsA); alert(countGamesAwayWinsA); alert(countGamesALLWinsA);
+                    var countGamesHomeDraws = countGamesHomeDrawsA[0].slice(1, countGamesHomeDrawsA[0].length - 2);
+                    var precentGamesHomeDraws = countGamesHomeDrawsA[1].slice(3, countGamesHomeDrawsA[1].length);
+                    var countGamesAwayDraws = countGamesAwayDrawsA[0].slice(1, countGamesAwayDrawsA[0].length - 2);
+                    var precentGamesAwayDrawsA = countGamesAwayDrawsA[1].slice(3, countGamesAwayDrawsA[1].length);
+                    var countGamesALLDraws = countGamesALLDrawsA[0].slice(1, countGamesALLDrawsA[0].length - 2);
+                    var precentGamesALLDrawsA = countGamesALLDrawsA[1].slice(3, countGamesALLDrawsA[1].length - 2);
+                    // alert(countGamesHomeDraws); alert(precentGamesHomeDraws); alert(countGamesAwayDraws); alert(precentGamesAwayDrawsA); alert(countGamesALLDraws); alert(precentGamesALLDrawsA);
+
+                    var tempArray = myArray2[5].split('average":');
+                    var averageOwnPointsHome = splitByTwo(tempArray[1], 'home":"', '"');
+                    var averageOwnPointsAway = splitByTwo(tempArray[1], 'away":"', '"');
+                    var averageOwnPointsAll = splitByTwo(tempArray[1], 'all":"', '"');
+
+                    var tempArray = myArray2[6].split('average":');
+                    var averageAgainstPointsHome = splitByTwo(tempArray[1], 'home":"', '"');
+                    var averageAgainstPointsAway = splitByTwo(tempArray[1], 'away":"', '"');
+                    var averageAgainstPointsAll = splitByTwo(tempArray[1], 'all":"', '"');
+                    var tempArray = JSON.stringify(authors).split(',"league":');
+                    var leag = splitByTwo(tempArray[1], 'name":"', '"');
+                   //    alert(averageAgainstPointsHome); alert(averageAgainstPointsAway); alert(averageAgainstPointsAll);
+                   openTableStat(leag, homeiot, name, logo, countGamesAll, countGamesAway, countGamesHome, countGamesHomeWins, precentGamesHomeWins, countGamesAwayWins, precentGamesAwayWinsA, countGamesALLWins, precentGamesALLWinsA, countGamesHomeLoses, precentGamesHomeLoses, countGamesAwayLoses, precentGamesAwayLosesA, countGamesALLLoses, precentGamesALLLosesA, countGamesHomeDraws, precentGamesHomeDraws, countGamesAwayDraws, precentGamesAwayDrawsA, countGamesALLDraws, precentGamesALLDrawsA, averageOwnPointsHome, averageOwnPointsAway, averageOwnPointsAll, averageAgainstPointsHome, averageAgainstPointsAway, averageAgainstPointsAll)
+                })
+        }
+        function openTableStat(league ,homeiot, name, logo, countGamesAll, countGamesAway, countGamesHome, countGamesHomeWins, precentGamesHomeWins, countGamesAwayWins, precentGamesAwayWinsA, countGamesALLWins, precentGamesALLWinsA, countGamesHomeLoses, precentGamesHomeLoses, countGamesAwayLoses, precentGamesAwayLosesA, countGamesALLLoses, precentGamesALLLosesA, countGamesHomeDraws, precentGamesHomeDraws, countGamesAwayDraws, precentGamesAwayDrawsA, countGamesALLDraws, precentGamesALLDrawsA, averageOwnPointsHome, averageOwnPointsAway, averageOwnPointsAll, averageAgainstPointsHome, averageAgainstPointsAway, averageAgainstPointsAll) {
+            document.getElementById("home").style.right = "45%";
+            document.getElementById("home").style.top = "0%";
+            document.getElementById("home").style.height = "50px";
+            document.getElementById("home").style.width = "50px";
+            var x = document.getElementById("homeStatArray");
+            x.style.left = "0%"; x.style.position = "absolute"; x.style.top = "0%"; x.style.textAlign = "center"; x.style.fontWeight = "900"; x.style.width = "auto"; x.style.minWidth = "100%";; x.style.height = "auto"; x.style.fontSize = "21px"; x.style.color = "black";
+
+            if (homeiot == "home") {
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0);var cell2 = row.insertCell(1);cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%";
+                cell1.innerHTML = "שימו לב, הנתונים מתבססים רק על סמך משחקי הקבוצות ב- "  + league + "&nbsp";
+                cell2.innerHTML = "<img class='img' src='" + logo + "'width='90' height='90'/>";
+                var row = x.insertRow(-1);var cell1 = row.insertCell(0);var cell2 = row.insertCell(1);cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "שם הקבוצה &nbsp";
+                cell2.innerHTML =name;
+                var row = x.insertRow(-1);var cell1 = row.insertCell(0);var cell2 = row.insertCell(1);cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "כמות הניצחונות &nbsp";
+                cell2.innerHTML = countGamesHomeWins + "/" + countGamesHome + "&nbsp(" + parseInt(parseFloat(precentGamesHomeWins) * 100) + "%)&nbsp במשחקי הבית &nbsp";
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(1); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "כמות הנקודות הממוצעת שהקבוצה קולעת &nbsp";
+                cell2.innerHTML = averageOwnPointsHome + "&nbsp במשחקי הבית &nbsp";
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(1); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "כמות הנקודות הממוצעת שהקבוצה סופגת &nbsp";
+                cell2.innerHTML = averageAgainstPointsHome + "&nbsp במשחקי הבית &nbsp";
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(1); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "תוצאת סיום משחק משוערת &nbsp";
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(1); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "44%"; cell1.style.fontSize = "35px";
+                cell1.innerHTML = "כמות נקודות משוערת &nbsp";
+            }
+            else {
+                var cell3 = x.rows[0].insertCell(-1);
+                cell3.innerHTML = "<img class='img' src='" + logo + "'width='90' height='90'/>";
+                var cell3 = x.rows[1].insertCell(-1);
+                cell3.innerHTML = name;
+                var cell3 = x.rows[2].insertCell(-1);
+                cell3.innerHTML = "&nbsp" + countGamesAwayWins + "/" + countGamesAway + "&nbsp(" + parseInt(parseFloat(precentGamesAwayWinsA) * 100) + "%)&nbsp במשחקי החוץ &nbsp";
+                var cell3 = x.rows[3].insertCell(-1);
+                cell3.innerHTML = averageOwnPointsAway + "&nbsp במשחקי החוץ &nbsp";
+                var cell3 = x.rows[4].insertCell(-1);
+                cell3.innerHTML = averageAgainstPointsAway + "&nbsp במשחקי החוץ &nbsp";
+                var secondTeamAgainstPointsHome = x.rows[4].cells[1].innerHTML.slice(0, x.rows[4].cells[1].innerHTML.length - 25);
+                var secondTeamOwnPointsHome = x.rows[3].cells[1].innerHTML.slice(0, x.rows[3].cells[1].innerHTML.length - 25);
+                var cell3 = x.rows[5].insertCell(1);
+                cell3.innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2) + "-" + parseInt((parseFloat(secondTeamOwnPointsHome) + parseFloat(averageAgainstPointsAway)) / 2)  + "&nbsp";
+                var cell3 = x.rows[6].insertCell(1);
+                var numberPoints = parseInt(parseInt((parseFloat(secondTeamOwnPointsHome) + parseFloat(averageAgainstPointsAway)) / 2) + parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2));
+                cell3.innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + parseInt(parseInt(numberPoints) - 5) + "-" + parseInt(parseInt(numberPoints) + 5) + "&nbsp";
+            }
+
+         
+                
+            
+        }
+        function formatApiAllLeagues(country) {
+            var leaguesArrayId = [];
+            var leaguesArrayName = [];
+            var leaguesArrayLogo = [];
+            fetch('https://api-basketball.p.rapidapi.com/leagues?country='+country, deatlsApi())
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var authors = data;
+                    var myArray = JSON.stringify(authors).split('}]},');
+                    var tempArray = myArray[0].split('response":[');
+                    myArray[0] = tempArray[1];
+                    for (var i = 0; i < myArray.length; i++) {
+                        leaguesArrayId[leaguesArrayId.length] = splitByTwo(myArray[i], 'id":', ",");
+                        leaguesArrayName[leaguesArrayName.length] = splitByTwo(myArray[i], 'name":', ",");
+                        leaguesArrayLogo[leaguesArrayLogo.length] = splitByTwo(myArray[i], 'logo":', ",");
+                    }
+                    var temp;
+
+                    for (var i = 0; i < leaguesArrayId.length; i++) {
+                        for (var j = i + 1; j < leaguesArrayId.length; j++) {
+                            if (parseInt(leaguesArrayId[i]) > parseInt(leaguesArrayId[j])) {
+                                temp = leaguesArrayId[i];
+                                leaguesArrayId[i] = leaguesArrayId[j];
+                                leaguesArrayId[j] = temp;
+
+                                temp = leaguesArrayName[i];
+                                leaguesArrayName[i] = leaguesArrayName[j];
+                                leaguesArrayName[j] = temp;
+                                temp = leaguesArrayLogo[i];
+                                leaguesArrayLogo[i] = leaguesArrayLogo[j];
+                                leaguesArrayLogo[j] = temp;
+                            }
+                        }
+                    }
+                   
+                    openTableLeague(leaguesArrayLogo, leaguesArrayId, leaguesArrayName);
+                })
+        }
+
+        //constant detals api
+        function deatlsApi() {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com',
+                    'X-RapidAPI-Key': '1217ec51e6msh8a498adfb18c982p1edf6djsn59fef8310eb0',
+                }
+            };
+            return options;
+        }
+
+        function cheakNumberLessTen(number) {
+            if (number < 10)
+                return "0" + number;
+            else
+                return number;
+        }
+        function onLoad() {
+            formatApiAllCountries();
+        }
+        var choLeague = "";
+        function openTableLeague(logo, id, name) {
+            var x = document.getElementById("leageusArray");
+            x.style.position = "absolute";
+            x.style.left = "5%";
+            x.style.top = "2%";
+            x.style.cursor = "pointer";
+            x.style.textAlign = "center";
+           // x.style.backgroundColor = "white";
+         //   x.style.opacity = "70%";
+            x.style.width = "50%";
+            x.style.height = "50%";
+            x.style.fontWeight = "900";
+            //document.getElementById("body").style.backgroundSize = "800px";
+            var countClick = 0;
+            for (var i = 0; i < id.length; i++) {
+                if(i%2==0)
+                 var row = x.insertRow(-1);
+                var cell1 = row.insertCell(-1);
+                cell1.setAttribute("id", id[i]);
+                cell1.style.fontSize = "25px";
+                cell1.style.color = "black";
+                cell1.innerHTML += name[i] + "</br>";
+                cell1.innerHTML += "<img src=" + logo[i] + "width='120' height='90'/><div style='display: none'>" + id[i] + "</div>";
+                cell1.onclick = function () {
+                    if (countClick == 0) {
+                        document.getElementById("leageusArray").style.display = "none";
+                        var leagueChoose = splitByTwo(this.innerHTML, 'none">', "<");
+                        choLeague = leagueChoose;
+                        openDayGames(leagueChoose);
+                    }
+                    countClick++;
+                }
+            }
+        }
+        var globalCountryChoose = "";
+        function openTableCountries(answers, id, name) {
+            var x = document.createElement("TABLE");
+            x.setAttribute("id", "countriesArray");
+            x.style.position = "absolute";
+            x.style.left = "10%";
+            x.style.top = "12%";
+            x.style.cursor = "pointer";
+            document.body.appendChild(x);
+            var countClick = 0;
+            var count = 0;
+            var row = x.insertRow(-1);
+            for (var i = 0; i < answers.length; i++) {
+                if (i != 0 && i != 4 && i != 10 && i != 21 && i != 44 && i != 47 && i != 54) { continue };
+                var cell1 = row.insertCell(-1);
+                cell1.setAttribute("id", answers[i]);
+                cell1.innerHTML = "<img src='" + answers[i] + "'width='80' height='60' /> <div style='display: none'>" + name[i] + "</div>";
+                cell1.onclick = function () {
+                    if (countClick == 0) {
+                        document.getElementById("countriesArray").parentNode.removeChild(document.getElementById("countriesArray"));
+                        var countreyChoose = splitByTwo(this.innerHTML, 'none">', "<");
+                        globalCountryChoose = countreyChoose;
+                        formatApiAllLeagues(countreyChoose);
+                        document.getElementById("home").style.visibility = "visible";
+                        document.getElementById("h1").style.visibility = "hidden";
+                        countClick++;
+                    }
+                }
+            }
+            for (var i = 0; i < answers.length; i++) {
+                if (i == 0 || i == 4 || i == 10 || i == 21 || i == 44 || i ==47 || i ==54) { continue };
+                if (count % 7 == 0) {
+                    var row = x.insertRow(-1);
+                }
+                count++;
+                    var cell1 = row.insertCell(-1);
+                    cell1.setAttribute("id", answers[i]);
+                    cell1.innerHTML = "&nbsp&nbsp&nbsp<img src='" + answers[i] + "'width='50' height='35' /><div style='display: none'>" + name[i] + "</div>";
+                    cell1.onclick = function () {
+                        if (countClick == 0) {
+                            document.getElementById("countriesArray").parentNode.removeChild(document.getElementById("countriesArray"));
+                            var countreyChoose = splitByTwo(this.innerHTML, 'none">', "<");
+                            formatApiAllLeagues(countreyChoose);
+                            document.getElementById("home").style.visibility = "visible";
+                            document.getElementById("h1").style.visibility = "hidden";
+                            countClick++;
+                        }
+                    }
+            }
+         
+        }
+
+        function openGamesTable(process, idGame, date, idHomeTeam, idAwayTeam, nameHomeTeam, nameAwayTeam, logoHomeTeam, logoAwayTeam, year, month, day, hour, minutes, homeTeamScore, awayTeamScore, gameStatus, time) {
+            if (process == "regular") {
+                var x = document.getElementById("gamesArray");
+                x.style.position = "absolute";
+                x.style.left = "3%";
+                x.style.top = "0%";
+                x.style.cursor = "pointer";
+            }
+            if (process == "stat") {
+                var x = document.getElementById("gamesPastArray");
+            }
+            if (process == "stat2") {
+                var x = document.getElementById("gamesPastArray2");
+            }
+         
+            x.style.textAlign = "center";
+            x.style.fontWeight = "900";
+            var countClick = 0;
+            for (var i = 0; i < idGame.length; i++) {
+                if (gameStatus[i] == "Game Finished" && process != "stat" && process != "stat2") {
+                    continue;
+                }
+                if (gameStatus[i] != "Game Finished" && process == "stat" || gameStatus[i] != "Game Finished" && process == "stat2") {
+                    continue;
+                }
+                if (process == "regular") {
+                   var row = x.insertRow(-1);
+                }
+                if (process == "stat" || process == "stat2") {
+                    var row = x.insertRow(0);
+                }
+                var cell1 = row.insertCell(0);
+                cell1.setAttribute("id", idGame[i]);
+                
+                
+                cell1.style.color = "black";
+                cell1.innerHTML += nameHomeTeam[i] + " vs " + nameAwayTeam[i] + "</br>";
+                if (process == "regular") {
+                    cell1.style.fontSize = "25px";
+                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='120' height='90'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
+                }
+                if (process == "stat" || process == "stat2") {
+                    cell1.style.fontSize = "12px";
+                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='75' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
+                }
+                cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                if (homeTeamScore[i] != "null") {
+                    cell1.innerHTML += awayTeamScore[i] + "-" + homeTeamScore[i]
+                }
+                else {
+                    cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                }
+                cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                if (process == "regular") {
+                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='120' height='90'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
+                }
+                if (process == "stat" || process == "stat2") {
+                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='75' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
+                }
+                cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
+                if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2") {
+                    cell1.innerHTML += date[i] + "</br>";
+                }
+                else if (gameStatus[i] != "Half Time") {
+                    var castHebrow = "רבע " + gameStatus[i].charAt(gameStatus[i].length - 1);
+                    time[i] = time[i].slice(1, time[i].length - 1)
+                    cell1.innerHTML += castHebrow+ "</br>";
+                }
+                if (process == "regular") {
+                    cell1.innerHTML += "--------------------------------------------------";
+                }
+
+                if (process == "regular") {
+                    cell1.onclick = function () {
+                        countClick++;
+                        var indexRemainRow;
+                        var table = document.getElementById("gamesArray");
+                        var limit = table.rows.length;
+                        var rowChoose = this.innerHTML;
+                        var rowArrayHomeId = [];
+                        var rowArrayAwayId = [];
+                        var chooseHomeId;
+                        var chooseAwayId;
+                        var ChooseText = rowChoose.split(">&nbsp");
+                        chooseHomeId = splitByTwo(ChooseText[0], 'none">', "<");
+                        chooseAwayId = splitByTwo(ChooseText[1], 'none">', "<");
+                        var idOfGame = splitByTwo(ChooseText[1], 'none">k', "l<");
+                        for (var i = 0; i < limit; i++) {
+                            var rowText = table.rows[i].innerHTML.split(">&nbsp");
+                            rowArrayHomeId[rowArrayHomeId.length] = splitByTwo(rowText[0], 'none">', "<");
+                            rowArrayAwayId[rowArrayAwayId.length] = splitByTwo(rowText[1], 'none">', "<");
+                            if (chooseHomeId == rowArrayHomeId[i] && chooseAwayId == rowArrayAwayId[i]) {
+                                indexRemainRow = i;
+                            }
+                        }
+                        table.rows[0].innerHTML = table.rows[indexRemainRow].innerHTML;
+                        table.style.display = "none";
+                        table.style.height = "150px";
+                        var choLeagueLocal = choLeague;
+                        openStatTable(chooseHomeId, chooseAwayId, choLeagueLocal);
+                        // formatApiBets("odds?game=" + idOfGame);
+                    }
+                }
+            }
+        }
+        function openStatTable(homeId, awayId, league) {
+            var currentDate = new Date();
+            if (globalCountryChoose != "Europe") {
+                var year = parseInt(currentDate.getFullYear() - 1) + '-' + currentDate.getFullYear();
+            }
+            else {
+                var year = parseInt(currentDate.getFullYear() - 1)
+            }
+            formatApiAllStat('statistics?&league=' + league + '&season=' + year + '&team=' + homeId, "home");
+            setTimeout(function () {
+                formatApiAllStat('statistics?&league=' + league + '&season=' + year + '&team=' + awayId, "away");
+            }, 500);
+            setTimeout(function () {
+                formatApiLastGame('games?&league=' + league + '&season=' + year + '&team=' + homeId, "away");
+                formatApiLastGame('games?&league=' + league + '&season=' + year + '&team=' + awayId, "away");
+            }, 1000);
+
+        }
+        function clearTable(table) {
+            var rows = table.rows;
+            var i = rows.length;
+            while (--i) {
+                rows[i].parentNode.removeChild(rows[i]);
+            }
+        }
+        function timeAddPoint(time) {
+            setTimeout(function () {
+                document.getElementById("h1").innerHTML += ".";
+            }, time);
+        }
+        function openDayGames(valuechoose) {
+            document.getElementById("h1").style.fontSize = "70px";
+            document.getElementById("h1").style.zIndex = "1";
+            setInterval(function () {
+                if (document.getElementById("gamesArray").rows.length > 0) {
+                    document.getElementById("h1").style.visibility = "hidden";
+                }
+            }, 50);
+            document.getElementById("h1").innerHTML = "טוען";
+            document.getElementById("h1").style.visibility = "visible";
+            timeAddPoint(200); timeAddPoint(700); timeAddPoint(1200); timeAddPoint(1700);
+           
+            var currentDate2 = new Date();
+            var currentDate = new Date();
+            var currentDate3 = new Date();
+            currentDate2.setDate(currentDate2.getDate() - 1);
+            currentDate3.setDate(currentDate3.getDate() + 1);
+        
+            if (globalCountryChoose != "Europe") {
+                var year2 = parseInt(currentDate2.getFullYear() - 1) + '-' + currentDate2.getFullYear();
+                var year = parseInt(currentDate.getFullYear() - 1) + '-' + currentDate.getFullYear();
+                var year3 = parseInt(currentDate3.getFullYear() - 1) + '-' + currentDate3.getFullYear();
+            }
+            else {
+                var year2 = parseInt(currentDate2.getFullYear() - 1);
+                var year = parseInt(currentDate.getFullYear() - 1)
+                var year3 = parseInt(currentDate3.getFullYear() - 1)
+            }
+
+            formatApiGames('games?date=' + currentDate2.getFullYear() + '-' + cheakNumberLessTen(currentDate2.getMonth() + 1) + '-' + cheakNumberLessTen(currentDate2.getDate()) + '&league=' + valuechoose + '&season=' + year2);
+                setTimeout(function () {
+                    formatApiGames('games?date=' + currentDate.getFullYear() + '-' + cheakNumberLessTen(currentDate.getMonth() + 1) + '-' + cheakNumberLessTen(currentDate.getDate()) + '&league=' + valuechoose + '&season=' + year);
+                }, 500);
+               
+                setTimeout(function () {
+                    formatApiGames('games?date=' + currentDate3.getFullYear() + '-' + cheakNumberLessTen(currentDate3.getMonth() + 1) + '-' + cheakNumberLessTen(currentDate3.getDate()) + '&league=' + valuechoose + '&season=' + year3);
+                }, 1000);
+
+                setTimeout(function () {
+                var x = document.getElementById("gamesArray");
+                if (x.rows.length == 0) {
+                   // document.body.style.cursor = 'wait';
+                    alert("אין משחקים בזמן הקרוב");
+                    loaded();
+                }
+                }, 2700);
+               
+            }
+
+            function formatApiGames(link) {
+                var gameStatusArray = [];
+                var quarterNumberArray = [];
+                var timeArray = [];
+                var idArray = [];
+                var dateTextArray = [];
+                var dateYearArray = [];
+                var dateMonthArray = [];
+                var dateDayArray = [];
+                var dateHourArray = [];
+                var dateMinutesArray = [];
+                var homeTeamArrayId = [];
+                var homeTeamArrayName = [];
+                var homeTeamArrayLogo = [];
+                var homeTeamArrayScore = [];
+                var awayTeamArrayId = [];
+                var awayTeamArrayName = [];
+                var awayTeamArrayLogo = [];
+                var awayTeamArrayScore = [];
+                fetch('https://api-basketball.p.rapidapi.com/' + link, deatlsApi())
+                    .then((resp) => resp.json())
+                    .then(function (data) {
+                        var authors = data;
+                        var myArray = JSON.stringify(authors).split("}}},");
+                        var tempArray = myArray[0].split('response":[');
+                        myArray[0] = tempArray[1];
+                        for (var i = 0; i < myArray.length; i++) {
+                            myArray[i] = myArray[i].replace("date", "☼"); myArray[i] = myArray[i].replace("id", "☼"); myArray[i] = myArray[i].replace("+", "☼");
+                            myArray[i] = myArray[i].replace("teams", "☼"); myArray[i] = myArray[i].replace("scores", "☼"); myArray[i] = myArray[i].replace("away", "☼");
+                            var myArray2 = myArray[i].split("☼");
+                            //alert(myArray);
+                            idArray[idArray.length] = myArray2[1].slice(2, myArray2[1].length - 2);
+                            var dateSplitArray1 = (myArray2[2].slice(3, myArray2[2].length - 3)).split("T");
+                            var dateSplitArray2 = dateSplitArray1[0].split("-");
+                            var dateSplitArray3 = dateSplitArray1[1].split(":");
+                            var hours = parseInt(parseInt(dateSplitArray3[0]) + 3);
+                            if (hours >= 24) {
+                                dateSplitArray2[2] = parseInt(parseInt(dateSplitArray2[2]) + 1);
+                                hours = hours - 24;
+                            }
+                            var tempHours = hours;
+                            if (hours < 10 && hours!="00") {
+                                hours = cheakNumberLessTen(hours)
+                            }
+                            dateTextArray[dateTextArray.length] = "בתאריך: " + dateSplitArray2[2] + "/" + dateSplitArray2[1] + "/" + dateSplitArray2[0] + " בשעה: " + hours + ":" + dateSplitArray3[1];
+                             dateYearArray [dateYearArray.length] = dateSplitArray2[0];
+                             dateMonthArray [dateMonthArray.length] = dateSplitArray2[1];
+                             dateDayArray[dateDayArray.length] = dateSplitArray2[2];
+                            var stringHomeTeamArray = myArray2[4];
+                            homeTeamArrayId[homeTeamArrayId.length] = splitByTwo(stringHomeTeamArray, 'id":', ",");
+                            homeTeamArrayName[homeTeamArrayName.length] = splitByTwo(stringHomeTeamArray, 'name":"', '",');
+                            homeTeamArrayLogo[homeTeamArrayLogo.length] = splitByTwo(stringHomeTeamArray, 'logo":"', '"}');
+                           // document.getElementById("ff").innerHTML = JSON.stringify(authors);
+                            var stringAwayTeamArray = myArray2[5];
+                            awayTeamArrayId[awayTeamArrayId.length] = splitByTwo(stringAwayTeamArray, 'id":', ",");
+                            awayTeamArrayName[awayTeamArrayName.length] = splitByTwo(stringAwayTeamArray, 'name":"', '",');
+                            awayTeamArrayLogo[awayTeamArrayLogo.length] = splitByTwo(stringAwayTeamArray, 'logo":"', '"}');
+                            gameStatusArray[gameStatusArray.length] = splitByTwo(myArray[i], 'long":"', '"');
+                            timeArray[timeArray.length] = splitByTwo(myArray[i], 'timer":', '}');
+                            
+                            var scores = myArray2[6].split('}');
+                            homeTeamArrayScore[homeTeamArrayScore.length] = splitByTwo(scores[0], 'total":', '}');
+                            awayTeamArrayScore[awayTeamArrayScore.length] = splitByTwo(scores[1], 'total":', '}');
+                           // alert(homeTeamArrayScore[i] + "-" + awayTeamArrayScore[i]);
+
+                        }
+                        // alert(JSON.stringify(authors));
+                        //  alert(awayTeamArrayLogo);
+                        openGamesTable("regular",idArray, dateTextArray, homeTeamArrayId, awayTeamArrayId, homeTeamArrayName, awayTeamArrayName, homeTeamArrayLogo, awayTeamArrayLogo, dateYearArray, dateMonthArray, dateDayArray, tempHours, dateSplitArray3[1], homeTeamArrayScore, awayTeamArrayScore, gameStatusArray, timeArray);
+                    })
+            }
+            function splitByTwo(str,one,two) {
+                var id = str.split(one);
+                var id2 = id[1].split(two);
+                return id2[0];
+            }
+            function loaded() {
+                window.location.assign(window.location.href)
+
+            }
+    </script>
+</head>
+<body id="body" onload="onLoad()" class="stretch"  style="background-image:url('https://img.wallpapersafari.com/desktop/1536/864/38/12/nHP5N4.jpg');">
+    <form id="form1" runat="server">
+        <div>
+            <div  border="1" dir="ltr" style="max-height:32.6%;width:22%; overflow:auto;position:absolute;top:67%;right:49%">
+             <table style="direction:rtl;width:100%" cellspacing="0" cellpadding="1" border="1" id="gamesPastArray"></table>
+                  </div>
+             <div dir="ltr" style="max-height:32.6%;width:22%; overflow:auto;position:absolute;top:67%;right:90%">
+             <table style="direction:rtl;width:100%" cellspacing="0" cellpadding="1" border="1" id="gamesPastArray2"></table>
+                  </div>
+            <h1 id="h1" style="text-align:center;color:black;opacity:0.8;width:auto;position:absolute;right:45%;top:4%;font-size:26px"></h1>
+           <img id="home" onclick="loaded()" style="cursor:pointer;visibility:hidden;z-index:1;position:absolute;right:35%;top:0%" src="http://cdn.onlinewebfonts.com/svg/img_159611.png" width='120' height='90'/>
+            <table id="gamesArray"></table>
+            <table id="leageusArray"></table>
+              <table id="homeStatArray"></table>
+
+              
+        </div>
+    </form>
+</body>
+</html>
