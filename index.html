@@ -82,6 +82,7 @@
 
                 })
         }
+
         function formatApiLastGame(teamLink, status) {
             var gameStatusArray = [];
             var quarterNumberArray = [];
@@ -154,26 +155,58 @@
                         homeTeamArrayScore[homeTeamArrayScore.length] = splitByTwo(scores[0], 'total":', '}');
                         awayTeamArrayScore[awayTeamArrayScore.length] = splitByTwo(scores[1], 'total":', '}');
                         // alert(homeTeamArrayScore[i] + "-" + awayTeamArrayScore[i]);
+                        if (gameStatusArray[i] == "After Over Time" || gameStatusArray[i] == "Game Finished") {
+                            //  alert(homeTeamArrayName[i]+"(home)"+awayTeamArrayName[i]+"(away)");
+                            if (status == "stat") {
+                                if (globalIdHomeTeamChoose == homeTeamArrayId[i]) {
+                                    if (parseInt(homeTeamArrayScore[i]) > parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "W";
+                                    }
+                                    if (parseInt(homeTeamArrayScore[i]) < parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "L";
+                                    }
+                                }
+                                if (globalIdHomeTeamChoose == awayTeamArrayId[i]) {
+                                    if (parseInt(homeTeamArrayScore[i]) < parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "W";
+                                    }
+                                    if (parseInt(homeTeamArrayScore[i]) > parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "L";
 
-                        if (homeTeamArrayScore[i] != "null") {
-                            if (homeTeamArrayName[i] == teamToCheck && homeTeamArrayScore[i] > awayTeamArrayScore[i]) {
-                                continious[continious.length] = "W";
+                                    }
+
+                                }
                             }
-                            if (homeTeamArrayName[i] == teamToCheck && homeTeamArrayScore[i] < awayTeamArrayScore[i]) {
-                                continious[continious.length] = "L";
+                            // alert(homeTeamArrayName[i]+"("+homeTeamArrayScore[i]+")vs"+awayTeamArrayName[i]+"("+awayTeamArrayScore[i]+")")
+                            if (status == "stat2") {
+                                if (globalIdAwayTeamChoose == homeTeamArrayId[i]) {
+                                    if (parseInt(homeTeamArrayScore[i]) > parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "W";
+                                    }
+                                    if (parseInt(homeTeamArrayScore[i]) < parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "L";
+                                    }
+                                }
+                                if (globalIdAwayTeamChoose == awayTeamArrayId[i]) {
+                                    if (parseInt(homeTeamArrayScore[i]) < parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "W";
+                                    }
+                                    if (parseInt(homeTeamArrayScore[i]) > parseInt(awayTeamArrayScore[i])) {
+                                        continious[continious.length] = "L";
+                                    }
+
+                                }
                             }
-                            if (homeTeamArrayName[i] != teamToCheck && homeTeamArrayScore[i] < awayTeamArrayScore[i]) {
-                                continious[continious.length] = "W";
-                            }
-                            if (homeTeamArrayName[i] != teamToCheck && homeTeamArrayScore[i] > awayTeamArrayScore[i]) {
-                                continious[continious.length] = "L";
-                            }
-                            if (homeTeamArrayScore[i] == awayTeamArrayScore[i]) {
-                                continious[continious.length] = "D";
-                            }
+
+
+
                         }
+
                     }
-                    winLose(continious, status);
+                    if (status != "stat3") {
+
+                        winLose(continious, status);
+                    }
                     openGamesTable(status, idArray, dateTextArray, homeTeamArrayId, awayTeamArrayId, homeTeamArrayName, awayTeamArrayName, homeTeamArrayLogo, awayTeamArrayLogo, dateYearArray, dateMonthArray, dateDayArray, tempHours, dateSplitArray3[1], homeTeamArrayScore, awayTeamArrayScore, gameStatusArray, timeArray);
                 })
         }
@@ -190,15 +223,13 @@
                 }
                 if (array[i] == "L") {
                     color = "red";
-                    if(scoreGuess1!=0&&status == "stat")
-                    {
-                    scoreGuess1--;
-                    document.getElementById("homeStatArray").rows[5].cells[0].innerHTML=scoreGuess1+"</br>--------------";
+                    if (scoreGuess1 != 0 && status == "stat") {
+                        scoreGuess1--;
+                        document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = scoreGuess1 + "</br>--------------";
                     }
-                    if(scoreGuess2!=0&&status == "stat2")
-                    {
-                    scoreGuess2--;
-                    document.getElementById("homeStatArray").rows[5].cells[2].innerHTML=scoreGuess2+"</br>--------------";
+                    if (scoreGuess2 != 0 && status == "stat2") {
+                        scoreGuess2--;
+                        document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = scoreGuess2 + "</br>--------------";
                     }
                 }
                 if (status == "stat") {
@@ -207,6 +238,9 @@
                 if (status == "stat2") {
                     document.getElementById("WinLoseAway").innerHTML += '<span style="background-color:' + color + ';">' + array[i] + '</span>';
                 }
+            }
+            if (status == "stat2") {
+                    document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(scoreGuess2)+parseInt(scoreGuess1);
             }
         }
         function formatApiAllStat(teamLink, homeiot) {
@@ -299,11 +333,10 @@
                 cell1.innerHTML = "בבית < כמות ספיגה ממוצעת > בחוץ";
                 cell2.innerHTML = averageAgainstPointsHome; cell2.style.width = "300px";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "16px";
-                cell1.innerHTML = "תוצאת סיום משוערת</br>&nbsp";
+                cell1.innerHTML = "תוצאת סיום משוערת</br>כמות נקודות משוערת:&nbsp";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "16px";
-                cell1.innerHTML = "כמות נקודות משוערת: &nbsp";
+                cell1.innerHTML = "ראש בראש";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "16px"; cell1.style.height = "32%"
-                cell1.innerHTML = "המשחקים האחרונים ב-" + league + " &nbsp";
             }
             else {
                 var cell3 = x.rows[0].insertCell(-1); cell3.style.width = "300px";
@@ -323,14 +356,7 @@
                 cell3.innerHTML = parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2) + "</br>--------------";
                 var cell3 = x.rows[6].insertCell(-1); cell3.style.width = "300px";
                 var numberPoints = parseInt(parseInt((parseFloat(secondTeamOwnPointsHome) + parseFloat(averageAgainstPointsAway)) / 2) + parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2));
-               if(numberPoints!=0)
-               {
-                x.rows[6].cells[1].innerHTML += parseInt(parseInt(numberPoints) - 10) + "-" + parseInt(parseInt(numberPoints)) + "&nbsp";
-               }
-               else
-               {
-                x.rows[6].cells[1].innerHTML += numberPoints + "&nbsp";
-               }
+
             }
 
 
@@ -485,6 +511,7 @@
         }
 
         function openGamesTable(process, idGame, date, idHomeTeam, idAwayTeam, nameHomeTeam, nameAwayTeam, logoHomeTeam, logoAwayTeam, year, month, day, hour, minutes, homeTeamScore, awayTeamScore, gameStatus, time) {
+
             if (process == "regular") {
                 var x = document.getElementById("gamesArray");
                 x.style.position = "absolute";
@@ -499,20 +526,31 @@
             if (process == "stat2") {
                 var x = document.getElementById("gamesPastArray2");
             }
+            if (process == "stat3") {
+                var x = document.getElementById("gamesPastArray3");
+            }
             x.style.textAlign = "center";
             x.style.fontWeight = "900";
+
             var countClick = 0;
             for (var i = 0; i < idGame.length; i++) {
-                if (gameStatus[i] == "Game Finished" && process != "stat" && process != "stat2") {
+                if (gameStatus[i] == "Game Finished" && process != "stat" && process != "stat2" && process != "stat3") {
                     continue;
                 }
-                if (gameStatus[i] != "Game Finished" && process == "stat" || gameStatus[i] != "Game Finished" && process == "stat2") {
+
+                if (gameStatus[i] != "Game Finished" && gameStatus[i] != "After Over Time" && process == "stat" || gameStatus[i] != "Game Finished" && gameStatus[i] != "After Over Time" && process == "stat2" || gameStatus[i] != "Game Finished" && gameStatus[i] != "After Over Time" && process == "stat3") {
                     continue;
                 }
+                //אם אני רוצה שהטבלאות הצדדיות לא יכילו את המשחקים של הראש בראש
+               // if(globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat"||globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat2")
+               // {
+                //    continue;
+               // }
+
                 if (process == "regular") {
                     var row = x.insertRow(-1);
                 }
-                if (process == "stat" || process == "stat2") {
+                if (process == "stat" || process == "stat2" || process == "stat3") {
                     var row = x.insertRow(0);
                 }
                 var cell1 = row.insertCell(0);
@@ -520,12 +558,13 @@
 
 
                 cell1.style.color = "black";
-                cell1.innerHTML += nameHomeTeam[i] + " vs " + nameAwayTeam[i] + "</br>";
+
                 if (process == "regular") {
+                    cell1.innerHTML += nameHomeTeam[i] + " vs " + nameAwayTeam[i] + "</br>";
                     cell1.style.fontSize = "25px";
                     cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='120' height='90'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
-                if (process == "stat" || process == "stat2") {
+                if (process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.style.fontSize = "12px";
                     cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='70' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
@@ -540,11 +579,11 @@
                 if (process == "regular") {
                     cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='120' height='90'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
-                if (process == "stat" || process == "stat2") {
+                if (process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='70' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
-                if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2") {
+                if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.innerHTML += date[i] + "</br>";
                 }
                 else if (gameStatus[i] != "Half Time") {
@@ -582,12 +621,16 @@
                         table.style.display = "none";
                         table.style.height = "150px";
                         var choLeagueLocal = choLeague;
+                        globalIdHomeTeamChoose = chooseHomeId;
+                        globalIdAwayTeamChoose = chooseAwayId;
                         openStatTable(chooseHomeId, chooseAwayId, choLeagueLocal);
                         // formatApiBets("odds?game=" + idOfGame);
                     }
                 }
             }
         }
+        var globalIdHomeTeamChoose = "";
+        var globalIdAwayTeamChoose = "";
         function openStatTable(homeId, awayId, league) {
             var currentDate = new Date();
             if (globalCountryChoose != "Europe") {
@@ -606,6 +649,9 @@
             setTimeout(function () {
                 formatApiLastGame('games?&league=' + league + '&season=' + year + '&team=' + awayId, "stat2");
             }, 1500);
+            setTimeout(function () {
+                formatApiLastGame('games?&league=' + league + '&season=' + year + '&h2h=' + homeId + "-" + awayId, "stat3");
+            }, 2000);
 
         }
         function clearTable(table) {
@@ -766,6 +812,10 @@
             <div dir="ltr"
                 style="max-height:32.6%;max-width:20%; overflow:auto;position:absolute;top:67%;left:1.7%;z-index:5;">
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray2"></table>
+            </div>
+            <div dir="ltr"
+                style="max-height:31%;max-width:20%; overflow:auto;position:absolute;top:69%;left:24%;z-index:5;">
+                <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray3"></table>
             </div>
             <h1 id="h1"
                 style="text-align:center;color:black;opacity:0.8;width:auto;position:absolute;right:45%;top:4%;font-size:26px">
