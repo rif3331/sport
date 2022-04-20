@@ -341,7 +341,7 @@
                 cell2.innerHTML = averageAgainstPointsHome; cell2.style.width = "300px";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "460px"; cell1.style.fontSize = "16px";
                 cell1.innerHTML = "תוצאת סיום משוערת</br>כמות נקודות משוערת:&nbsp";
-                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "460px"; cell1.style.fontSize = "16px";
+                var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "460px"; cell1.style.fontSize = "16px";cell1.style.height = "20px";
                 cell1.innerHTML = "ראש בראש";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "460px"; cell1.style.fontSize = "16px"; cell1.style.height = "32%"
             }
@@ -803,14 +803,14 @@
     <form id="form1" runat="server">
         <div>
             <p id="WinLoseHome" style="position:absolute;top:55%;left:45%"></p>
-            <p id="WinLoseAway" style="position:absolute;top:55%;left:0%"></p>
+            <p id="WinLoseAway" style="position:absolute;top:55%;left:1%"></p>
             <div dir="ltr"
-                style="max-height:30%;max-width:20%; overflow:auto;position:absolute;top:67%;left:45%;z-index:5;">
+                style="max-height:30%;max-width:20%; overflow:auto;position:absolute;top:60%;left:45%;z-index:5;">
 
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray"></table>
             </div>
             <div dir="ltr"
-                style="max-height:30%;max-width:20%; overflow:auto;position:absolute;top:67%;left:0%;z-index:5;">
+                style="max-height:30%;max-width:20%; overflow:auto;position:absolute;top:60%;left:1%;z-index:5;">
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray2"></table>
             </div>
             <div dir="ltr"
