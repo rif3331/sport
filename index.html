@@ -554,7 +554,7 @@
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
                     var row = x.insertRow(0);
-                    date[i]= date[i].slice(0,date[i].length-11)
+                    date[i]= date[i].slice(8,date[i].length-11)
                 }
                 var cell1 = row.insertCell(0);
                 cell1.setAttribute("id", idGame[i]);
@@ -820,7 +820,7 @@
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray2"></table>
             </div>
             <div dir="ltr"
-                style="max-height:29%;max-width:20%; overflow:auto;position:absolute;top:69%;left:23%;z-index:5;">
+                style="max-height:29%;max-width:20%; overflow:auto;position:absolute;top:69%;left:24%;z-index:5;">
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray3"></table>
             </div>
             <h1 id="h1"
