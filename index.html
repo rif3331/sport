@@ -519,10 +519,6 @@
 
             if (process == "regular") {
                 var x = document.getElementById("gamesArray");
-                x.style.position = "absolute";
-                x.style.left = "7%";
-                x.style.width = "45%";
-                x.style.top = "0%";
                 x.style.cursor = "pointer";
             }
             if (process == "stat") {
@@ -567,11 +563,11 @@
                 if (process == "regular") {
                     cell1.innerHTML += nameHomeTeam[i] + " vs " + nameAwayTeam[i] + "</br>";
                     cell1.style.fontSize = "25px";
-                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='120' height='90'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='90' height='90'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.style.fontSize = "12px";
-                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='70' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='60' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 if (homeTeamScore[i] != "null") {
@@ -582,10 +578,10 @@
                 }
                 cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 if (process == "regular") {
-                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='120' height='90'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='90' height='90'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
-                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='70' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='60' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
                 if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2" || process == "stat3") {
@@ -624,7 +620,6 @@
                         }
                         table.rows[0].innerHTML = table.rows[indexRemainRow].innerHTML;
                         table.style.display = "none";
-                        table.style.height = "150px";
                         var choLeagueLocal = choLeague;
                         globalIdHomeTeamChoose = chooseHomeId;
                         globalIdAwayTeamChoose = chooseAwayId;
@@ -828,12 +823,15 @@
             <img id="home" onclick="loaded()"
                 style="cursor:pointer;visibility:hidden;z-index:1;position:absolute;right:35%;top:0%"
                 src="http://cdn.onlinewebfonts.com/svg/img_159611.png" width='120' height='90' />
-            <table id="gamesArray"></table>
             
             <table id="homeStatArray"></table>
             <div dir="ltr"
             style="max-height:60%;width: 500px; overflow:auto;position:absolute;top:20%;left:8%;">
             <table style="direction:rtl;width:100%;height: 30px;" cellspacing="1" cellpadding="1" id="leageusArray"></table>           
+        </div>
+        <div dir="ltr"
+        style="max-height:60%;width: 500px; overflow:auto;position:absolute;top:20%;left:8%;" >
+            <table style="direction:rtl;width:100%;height: 30px;" cellspacing="1" cellpadding="1" id="gamesArray"></table>        
         </div>
 
 
