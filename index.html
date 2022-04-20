@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
     <title></title>
     <style>
-
         img {
             opacity: 0.7;
         }
@@ -24,11 +23,19 @@
         }
 
         .stretch {
-            background: no-repeat center center fixed ;
-background-position-y: top;
+            background: no-repeat center center fixed;
+            background-position-y: top;
 
             direction: rtl;
         }
+        .ggg{ 
+            background: no-repeat center center fixed;
+        background-size: cover;
+        object-fit: cover;
+        background-repeat: no-repeat;
+    background-size: 100% 100%;
+        }
+        
     </style>
     <script type="text/javascript">
         function formatApiAllCountries() {
@@ -238,7 +245,7 @@ background-position-y: top;
                 }
             }
             if (status == "stat2") {
-                    document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(scoreGuess2)+parseInt(scoreGuess1);
+                document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(scoreGuess2) + parseInt(scoreGuess1);
             }
         }
         function formatApiAllStat(teamLink, homeiot) {
@@ -540,10 +547,10 @@ background-position-y: top;
                     continue;
                 }
                 //אם אני רוצה שהטבלאות הצדדיות לא יכילו את המשחקים של הראש בראש
-               // if(globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat"||globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat2")
-               // {
+                // if(globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat"||globalIdAwayTeamChoose==idAwayTeam[i]&&globalIdHomeTeamChoose==idHomeTeam[i]||globalIdHomeTeamChoose==idAwayTeam[i]&&globalIdAwayTeamChoose==idHomeTeam[i]&&process=="stat2")
+                // {
                 //    continue;
-               // }
+                // }
 
                 if (process == "regular") {
                     var row = x.insertRow(-1);
@@ -796,7 +803,7 @@ background-position-y: top;
     </script>
 </head>
 
-<body id="body" onload="onLoad()" class="stretch"
+<body id="body" onload="onLoad()" class="ggg"
     style="background-image:url('https://img.wallpapersafari.com/desktop/1536/864/38/12/nHP5N4.jpg')">
     <form id="form1" runat="server">
         <div>
