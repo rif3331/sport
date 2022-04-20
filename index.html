@@ -523,6 +523,7 @@
             }
             if (process == "stat") {
                 var x = document.getElementById("gamesPastArray");
+                
             }
             if (process == "stat2") {
                 var x = document.getElementById("gamesPastArray2");
@@ -553,6 +554,7 @@
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
                     var row = x.insertRow(0);
+                    date[i]= date[i].slice(0,date[i].length-11)
                 }
                 var cell1 = row.insertCell(0);
                 cell1.setAttribute("id", idGame[i]);
@@ -584,13 +586,8 @@
                     cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='30' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
-                if (gameStatus[i] == "Not Started") {
+                if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.innerHTML += date[i] + "</br>";
-                }
-             
-                if(process == "stat" || process == "stat2" || process == "stat3")
-                {
-                    cell1.innerHTML += date[i].slice(0,date[i.length-11]) + "</br>";
                 }
                 else if (gameStatus[i] != "Half Time") {
                     var castHebrow = "רבע " + gameStatus[i].charAt(gameStatus[i].length - 1);
@@ -811,8 +808,8 @@
 <body id="body" onload="onLoad()" class="ggg">
     <form id="form1" runat="server">
         <div>
-            <p id="WinLoseHome" style="position:absolute;top:61%;left:45%"></p>
-            <p id="WinLoseAway" style="position:absolute;top:61%;left:0%"></p>
+            <p id="WinLoseHome" style="position:absolute;top:61%;left:46%"></p>
+            <p id="WinLoseAway" style="position:absolute;top:61%;left:1%"></p>
             <div dir="ltr"
                 style="max-height:30%;max-width:20%; overflow:auto;position:absolute;top:69%;left:45%;z-index:5;">
 
