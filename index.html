@@ -334,10 +334,10 @@
                 cell1.innerHTML = "בבית < ניצחונות > בחוץ &nbsp";
                 cell2.innerHTML = countGamesHomeWins + "/" + countGamesHome + "&nbsp(" + parseInt(parseFloat(precentGamesHomeWins) * 100) + "%)";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "18px";
-                cell1.innerHTML = "בבית < כמות קליעה ממוצעת > בחוץ";
+                cell1.innerHTML = "בבית <קליעה ממוצעת > בחוץ";
                 cell2.innerHTML = averageOwnPointsHome; cell2.style.width = "300px";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "18px";
-                cell1.innerHTML = "בבית < כמות ספיגה ממוצעת > בחוץ";
+                cell1.innerHTML = "בבית < ספיגה ממוצעת > בחוץ";
                 cell2.innerHTML = averageAgainstPointsHome; cell2.style.width = "300px";
                 var row = x.insertRow(-1); var cell1 = row.insertCell(0); var cell2 = row.insertCell(0); cell1.style.opacity = "0.8"; cell1.style.backgroundColor = "white"; cell1.style.width = "300px"; cell1.style.fontSize = "16px";
                 cell1.innerHTML = "תוצאת סיום משוערת</br>כמות נקודות משוערת:&nbsp";
@@ -567,7 +567,7 @@
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
                     cell1.style.fontSize = "12px";
-                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='40' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='30' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 if (homeTeamScore[i] != "null") {
@@ -581,7 +581,7 @@
                     cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='90' height='90'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
-                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='40' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
+                    cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='30' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
                 if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2" || process == "stat3") {
@@ -805,16 +805,16 @@
             <p id="WinLoseHome" style="position:absolute;top:53%;left:47.3%"></p>
             <p id="WinLoseAway" style="position:absolute;top:53%;left:4.6%"></p>
             <div dir="ltr"
-                style="max-height:32.6%;max-width:20%; overflow:auto;position:absolute;top:67%;left:45%;z-index:5;">
+                style="max-height:25%;max-width:20%; overflow:auto;position:absolute;top:67%;left:45%;z-index:5;">
 
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray"></table>
             </div>
             <div dir="ltr"
-                style="max-height:32.6%;max-width:20%; overflow:auto;position:absolute;top:67%;left:1.7%;z-index:5;">
+                style="max-height:25%;max-width:20%; overflow:auto;position:absolute;top:67%;left:1.7%;z-index:5;">
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray2"></table>
             </div>
             <div dir="ltr"
-                style="max-height:31%;max-width:20%; overflow:auto;position:absolute;top:69%;left:24%;z-index:5;">
+                style="max-height:24%;max-width:20%; overflow:auto;position:absolute;top:69%;left:22%;z-index:5;">
                 <table style="direction:rtl;width:100%" cellspacing="1" cellpadding="1" id="gamesPastArray3"></table>
             </div>
             <h1 id="h1"
