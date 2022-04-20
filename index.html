@@ -221,8 +221,8 @@
             var scoreGuess1 = document.getElementById("homeStatArray").rows[5].cells[0].innerHTML.slice(0, document.getElementById("homeStatArray").rows[5].cells[0].innerHTML.length - 18);
             var scoreGuess2 = document.getElementById("homeStatArray").rows[5].cells[2].innerHTML.slice(0, document.getElementById("homeStatArray").rows[5].cells[2].innerHTML.length - 18);
             for (var i = array.length - 1; i > array.length - 6; i--) {
-                document.getElementById("WinLoseHome").style.fontSize = "40px";
-                document.getElementById("WinLoseAway").style.fontSize = "40px";
+                document.getElementById("WinLoseHome").style.fontSize = "36px";
+                document.getElementById("WinLoseAway").style.fontSize = "36px";
 
                 var color = "black";
                 if (array[i] == "W") {
@@ -584,8 +584,13 @@
                     cell1.innerHTML += "<img class='img' src='" + logoAwayTeam[i] + "'width='30' height='60'/></br ><div style='display: none'>" + idAwayTeam[i] + "</div>";
                 }
                 cell1.innerHTML += "<div style='display: none'>k" + idGame[i] + "l</div>";
-                if (gameStatus[i] == "Not Started" || process == "stat" || process == "stat2" || process == "stat3") {
+                if (gameStatus[i] == "Not Started") {
                     cell1.innerHTML += date[i] + "</br>";
+                }
+             
+                if(process == "stat" || process == "stat2" || process == "stat3")
+                {
+                    cell1.innerHTML += date[i].slice(0,date[i.length-11]) + "</br>";
                 }
                 else if (gameStatus[i] != "Half Time") {
                     var castHebrow = "רבע " + gameStatus[i].charAt(gameStatus[i].length - 1);
@@ -597,7 +602,7 @@
                     cell1.innerHTML += "----------------------";
                 }
                 else {
-                    cell1.innerHTML += "-------------";
+                    cell1.innerHTML += "-------------------";
                 }
 
                 if (process == "regular") {
