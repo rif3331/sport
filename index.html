@@ -573,7 +573,6 @@
                     cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='90' height='90'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
                 if (process == "stat" || process == "stat2" || process == "stat3") {
-                    document.getElementById("h22").style.visibility = "hidden";
                     cell1.style.fontSize = "12px";
                     cell1.innerHTML += "<img class='img' src='" + logoHomeTeam[i] + "'width='30' height='60'/><div style='display: none'>" + idHomeTeam[i] + "</div>";
                 }
@@ -610,6 +609,7 @@
 
                 if (process == "regular") {
                     cell1.onclick = function () {
+                        document.getElementById("h22").style.visibility = "hidden";
                         countClick++;
                         var indexRemainRow;
                         var table = document.getElementById("gamesArray");
