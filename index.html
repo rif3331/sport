@@ -675,11 +675,11 @@
         function timeAddPoint(time) {
             setTimeout(function () {
                 document.getElementById("h1").innerHTML += ".";
-                document.getElementById("h1").style.backgroundColor="";
             }, time);
         }
         function openDayGames(valuechoose) {
             document.getElementById("h1").style.fontSize = "70px";
+            document.getElementById("h1").style.backgroundColor="";
             document.getElementById("h1").style.zIndex = "1";
             setInterval(function () {
                 if (document.getElementById("gamesArray").rows.length > 0) {
