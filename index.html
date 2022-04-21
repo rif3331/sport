@@ -487,7 +487,9 @@
                         globalCountryChoose = countreyChoose;
                         formatApiAllLeagues(countreyChoose);
                         document.getElementById("home").style.visibility = "visible";
-                        document.getElementById("h1").style.visibility = "hidden";
+                    //    document.getElementById("h1").style.visibility = "hidden";
+                    document.getElementById("h1").innerHTML = "בחר את הליגה המבוקשת";
+                    document.getElementById("h1").width="auto";
                         countClick++;
                     }
                 }
