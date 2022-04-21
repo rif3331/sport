@@ -526,7 +526,6 @@
                 x.style.cursor = "pointer";
             }
             if (process == "stat") {
-                document.getElementById("h1").style.visibility = "hidden";
                 var x = document.getElementById("gamesPastArray");
 
             }
@@ -611,6 +610,7 @@
                     cell1.onclick = function () {
                         countClick++;
                         var indexRemainRow;
+                        document.getElementById("h1").style.visibility = "hidden";
                         var table = document.getElementById("gamesArray");
                         var limit = table.rows.length;
                         var rowChoose = this.innerHTML;
@@ -687,7 +687,7 @@
                     document.getElementById("h1").style.fontSize = "30px";
                     document.getElementById("h1").style.backgroundColor = "white";
                     document.getElementById("h1").style.width = "auto";
-                    document.getElementById("h1").style.left = "35%";
+                    document.getElementById("h1").style.left = "25%";
                     document.getElementById("h1").innerHTML = "לניתוח המשחק לחץ עליו";
                 }
             }, 50);
