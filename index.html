@@ -522,6 +522,7 @@
         function openGamesTable(process, idGame, date, idHomeTeam, idAwayTeam, nameHomeTeam, nameAwayTeam, logoHomeTeam, logoAwayTeam, year, month, day, hour, minutes, homeTeamScore, awayTeamScore, gameStatus, time) {
 
             if (process == "regular") {
+                document.getElementById("h1").style.visibility = "hidden";
                 var x = document.getElementById("gamesArray");
                 x.style.cursor = "pointer";
             }
@@ -685,6 +686,8 @@
                 if (document.getElementById("gamesArray").rows.length > 0) {
                     document.getElementById("h1").style.fontSize = "30px";
                     document.getElementById("h1").style.backgroundColor = "white";
+                    document.getElementById("h1").style.width = "auto";
+                    document.getElementById("h1").style.left = "45%";
                     document.getElementById("h1").innerHTML = "לניתוח המשחק לחץ עליו";
                 }
             }, 50);
