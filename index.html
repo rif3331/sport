@@ -216,11 +216,9 @@
                     }
                     openGamesTable(status, idArray, dateTextArray, homeTeamArrayId, awayTeamArrayId, homeTeamArrayName, awayTeamArrayName, homeTeamArrayLogo, awayTeamArrayLogo, dateYearArray, dateMonthArray, dateDayArray, tempHours, dateSplitArray3[1], homeTeamArrayScore, awayTeamArrayScore, gameStatusArray, timeArray);
                 })
+                .catch(err => console.error(document.getElementById("reco").innerHTML = "לא יתקיימו משחקים קודמים והאלגוריתם מתבסס על משחקי ראש בראש באותה עונה, לכן עדיף להמר על משחק אחר"));
 
-                if(document.getElementById("gamesPastArray3").rows.length == 0&&status == "stat3")
-                {
-                    document.getElementById("reco").innerHTML="לא יתקיימו משחקים קודמים והאלגוריתם מתבסס על משחקי ראש בראש באותה עונה, לכן עדיף להמר על משחק אחר";
-                }
+
         }
         function winLose(array, status) {
 
@@ -357,10 +355,10 @@
                     cell3.innerHTML = "אין נתונים כעת בעונה הנוכחית";
                 }
                 else {
-                   x.rows[5].cells[0].style.visibility="hidden";
+                    x.rows[5].cells[0].style.visibility = "hidden";
                     x.rows[5].cells[0].innerHTML = parseInt((parseFloat(secondTeamOwnPointsHome) + parseFloat(averageAgainstPointsAway)) / 2) + "</br>--------------";
                     var cell3 = x.rows[5].insertCell(-1); cell3.style.width = "300px";
-                    cell3.style.visibility="hidden";
+                    cell3.style.visibility = "hidden";
                     cell3.innerHTML = parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2) + "</br>--------------";
                     var cell3 = x.rows[6].insertCell(-1); cell3.style.width = "300px";
                     var numberPoints = parseInt(parseInt((parseFloat(secondTeamOwnPointsHome) + parseFloat(averageAgainstPointsAway)) / 2) + parseInt((parseFloat(secondTeamAgainstPointsHome) + parseFloat(averageOwnPointsAway)) / 2));
@@ -546,8 +544,8 @@
                 }
 
             }
-
             var dateToApi = year + "-" + month + "-" + cheakNumberLessTen(day);
+
             var currentDate = new Date();
             if (globalCountryChoose != "Europe") {
                 var season = parseInt(currentDate.getFullYear() - 1) + '-' + currentDate.getFullYear();
@@ -575,7 +573,6 @@
             fetch('https://api-basketball.p.rapidapi.com/' + teamLink, deatlsApi())
                 .then((resp) => resp.json())
                 .then(function (data) {
-
                     var authors = data;
                     var myArray = JSON.stringify(authors).split('"},"team":');
                     var tempArray = myArray[0].split('logo":"');
@@ -635,22 +632,26 @@
                     var tempArray = JSON.stringify(authors).split(',"league":');
                     var leag = splitByTwo(tempArray[1], 'name":"', '"');
                     //     alert(averageOwnPointsHome+name);
+
                     if (homeiot == "home") {
+
                         countGameArrayHome[countGameArrayHome.length] = countGamesAll;
                         averageOwnPointsArrayHome[averageOwnPointsArrayHome.length] = averageOwnPointsHome;
                         averageAgianstPointsArrayHome[averageAgianstPointsArrayHome.length] = averageAgainstPointsHome;
-                        // alert(name + ",count:" + countGameArrayHome[countGameArrayHome.length - 1] + " averageOwnPoints:" + averageOwnPointsArrayHome[averageOwnPointsArrayHome.length - 1] + " averageAgainstPoints:" + averageAgianstPointsArrayHome[averageAgianstPointsArrayHome.length - 1]);
+
                     }
                     if (homeiot == "away") {
+
                         countGameArrayAway[countGameArrayAway.length] = countGamesAll;
                         averageOwnPointsArrayAway[averageOwnPointsArrayAway.length] = averageOwnPointsAway;
                         averageAgainstPointsArrayAway[averageAgainstPointsArrayAway.length] = averageAgainstPointsAway;
+
                     }
+
                 })
         }
 
         function openGamesTable(process, idGame, date, idHomeTeam, idAwayTeam, nameHomeTeam, nameAwayTeam, logoHomeTeam, logoAwayTeam, year, month, day, hour, minutes, homeTeamScore, awayTeamScore, gameStatus, time) {
-
 
             if (process == "regular") {
                 var x = document.getElementById("gamesArray");
@@ -666,7 +667,7 @@
             if (process == "stat3") {
                 var x = document.getElementById("gamesPastArray3");
             }
-            
+
             x.style.textAlign = "center";
             x.style.fontWeight = "900";
 
@@ -721,9 +722,8 @@
                 else {
                     cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 }
-                if(process=="stat3")
-                {
-                    cell1.innerHTML+= "("+parseInt(parseInt(awayTeamScore[i])+parseInt(homeTeamScore[i]))+")";
+                if (process == "stat3") {
+                    cell1.innerHTML += "(" + parseInt(parseInt(awayTeamScore[i]) + parseInt(homeTeamScore[i])) + ")";
                 }
                 cell1.innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 if (process == "regular") {
@@ -785,6 +785,7 @@
 
             }
             if (process == "stat3") {
+
                 setTimeout(function () {
                     var temp;
                     for (var i = 0; i < countGameArrayHome.length; i++) {
@@ -824,8 +825,7 @@
                     //  alert("count:" + countGameArrayAway + " averageOwnPoints:" + averageOwnPointsArrayAway + " averageAgainstPoints:" + averageAgainstPointsArrayAway);
                     for (var i = 0; i < averageOwnPointsArrayHome.length + 1; i++) {
                         if (parseFloat(averageOwnPointsArrayHome[i]) == 0 || parseFloat(averageAgainstPointsArrayAway[i]) == 0 || parseFloat(averageOwnPointsArrayAway[i]) == 0 || parseFloat(averageAgianstPointsArrayHome[i]) == 0) {
-                            var pointsHomeTeam = "אין נתונים כעת בעונה הנוכחית";
-                            var pointsHomeAway = "";
+
                         }
                         else if (i == averageOwnPointsArrayHome.length) {
                             var pointsHomeTeam = document.getElementById("homeStatArray").rows[5].cells[0].innerHTML.slice(0, document.getElementById("homeStatArray").rows[5].cells[0].innerHTML.length - 18);
@@ -897,7 +897,9 @@
                         else {
                             var gap = parseInt(pointsHomeTeam) - parseInt(pointsHomeAway);
                         }
-                        getResult2(avargeUnderOver, gap, homiet, i);
+                        //alert(pointsHomeTeam);
+                            getResult2(avargeUnderOver, gap, homiet, i);
+                      
                         var idWinRecomend = 0;
                         var idWin = 0;
                         var gapRecomend = 0;
@@ -976,17 +978,23 @@
 
             var resultBig = parseInt(gap) + parseFloat(temp / 2);
             var resultSmall = parseFloat(temp / 2);
-            document.getElementById("homeStatArray").rows[5].cells[0].style.visibility="visible";
-            document.getElementById("homeStatArray").rows[5].cells[2].style.visibility="visible";
-            if (home == "home") {
+            document.getElementById("homeStatArray").rows[5].cells[0].style.visibility = "visible";
+            document.getElementById("homeStatArray").rows[5].cells[2].style.visibility = "visible";
+            if (home == "home"&&resultSmall>0) {
                 document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = resultBig + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = resultSmall + "</br>--------------";
+                document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(resultBig + resultSmall);
             }
-            if (home == "away") {
+           else if (home == "away"&&resultSmall>0) {
                 document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = resultSmall + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = resultBig + "</br>--------------";
+                document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(resultBig + resultSmall);
             }
-
+            else
+            {
+                document.getElementById("homeStatArray").rows[5].cells[0].innerHTML="ללא נתונים, משחק ראשון";
+                document.getElementById("homeStatArray").rows[5].cells[2].innerHTML="ללא נתונים, משחק ראשון";
+            }
         }
         function getResult2(sumPoints, gap, home, index) {
             var temp = parseInt(sumPoints) - parseInt(gap);
@@ -996,11 +1004,15 @@
             var resultBig = parseInt(gap) + parseFloat(temp / 2);
             var resultSmall = parseFloat(temp / 2);
             var x = document.getElementById("gamesPastArray3");
-            if (home == "home") {
-                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultSmall + "-" + resultBig +"("+parseInt(parseInt(resultBig)+parseInt(resultSmall))+")"+ "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+            if (home == "home"&&resultSmall>0) {
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultSmall + "-" + resultBig + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
-            if (home == "away") {
-                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultBig + "-" + resultSmall +"("+parseInt(parseInt(resultBig)+parseInt(resultSmall))+")"+ "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+             else if (home == "away"&&resultSmall>0) {
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultBig + "-" + resultSmall + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+            }
+            else
+            {
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML="ללא נתונים, משחק ראשון"+ "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
 
         }
