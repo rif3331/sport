@@ -931,11 +931,27 @@
 
                         if (idWin == idWinRecomend) {
                             var gap = gapWin - gapRecomend;
+                            if(globalIdWin==idWin)
+                            {
+                                gap = gap+globalGap;
+                            }
+                            else
+                            {
+                                gap = gap-globalGap;
+                            }
                             globalGap = gap;
                             globalIdWin = idWin;
                         }
                         if (idWin != idWinRecomend) {
                             var gap = gapWin + gapRecomend;
+                            if(globalIdWin==idWin)
+                            {
+                                gap = gap+globalGap;
+                            }
+                            else
+                            {
+                                gap = gap-globalGap;
+                            }
                             globalGap = gap;
                             globalIdWin = idWin;
                         }
