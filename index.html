@@ -834,10 +834,10 @@
                             countLastGame = parseFloat(awayTeamScore[i - 1]) + parseFloat(homeTeamScore[i - 1]);
                             var avargeUnderOver = parseInt(parseFloat(countRecomnd) + parseFloat(countLastGame)) / 2;
                             if (globalIdWin == globalIdHomeTeamChoose) {
-                                pointsHomeTeam = parseInt(parseInt(pointsHomeTeam) + parseInt(globalGap / 3));
+                                pointsHomeTeam = parseInt(parseInt(pointsHomeTeam) + parseInt(globalGap / 2));
                             }
                             if (globalIdWin == globalIdAwayTeamChoose) {
-                                pointsHomeAway = parseInt(parseInt(pointsHomeAway) + parseInt(globalGap / 3));
+                                pointsHomeAway = parseInt(parseInt(pointsHomeAway) + parseInt(globalGap / 2));
                             }
 
                             var homiet = "home";
@@ -865,22 +865,22 @@
                             if (globalGap > 0) {
 
                                 if (globalIdWin == idHomeTeam[i]) {
-                                    var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2) + parseInt(globalGap / 3);
+                                    var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2) + parseInt(globalGap / 2);
                                     var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2);
                                 }
                                 if (globalIdWin == idAwayTeam[i]) {
                                     var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2);
-                                    var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2) + parseInt(globalGap / 3);
+                                    var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2) + parseInt(globalGap / 2);
                                 }
                             }
                             else if (globalGap < 0) {
                                 if (globalIdWin == idHomeTeam[i]) {
-                                    var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2) + parseInt(globalGap / 3);
+                                    var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2) + parseInt(globalGap / 2);
                                     var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2);
                                 }
                                 if (globalIdWin == idAwayTeam[i]) {
                                     var pointsHomeTeam = parseInt((parseFloat(averageOwnPointsArrayHome[i]) + parseFloat(averageAgainstPointsArrayAway[i])) / 2);
-                                    var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2) + parseInt(globalGap / 3);
+                                    var pointsHomeAway = parseInt((parseFloat(averageOwnPointsArrayAway[i]) + parseFloat(averageAgianstPointsArrayHome[i])) / 2) + parseInt(globalGap / 2);
                                 }
                             }
                             else {
@@ -1021,10 +1021,10 @@
             var resultSmall = parseFloat(temp / 2);
             var x = document.getElementById("gamesPastArray3");
             if (home == "home"&&resultSmall>0) {
-                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultSmall + "-" + resultBig + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאה משוערת לפני המשחק:" + "</br>" + resultSmall + "-" + resultBig + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
              else if (home == "away"&&resultSmall>0) {
-                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאת משוערת לפני המשחק:" + "</br>" + resultBig + "-" + resultSmall + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאה משוערת לפני המשחק:" + "</br>" + resultBig + "-" + resultSmall + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
             else
             {
