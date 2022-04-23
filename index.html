@@ -428,7 +428,19 @@
         }
         function onLoad() {
             formatApiAllCountries();
+            getIPFromAmazon();
+
         }
+        function getIPFromAmazon() {
+            const url = "https://api.ipify.org/?format=json"
+            fetch(url)
+                .then(response => response.json())
+                .then(function (data) {
+                    var authors = data;
+                    alert(JSON.stringify(authors));
+                })
+        }
+
         var choLeague = "";
         function openTableLeague(logo, id, name) {
             var x = document.getElementById("leageusArray");
@@ -898,8 +910,8 @@
                             var gap = parseInt(pointsHomeTeam) - parseInt(pointsHomeAway);
                         }
                         //alert(pointsHomeTeam);
-                            getResult2(avargeUnderOver, gap, homiet, i);
-                      
+                        getResult2(avargeUnderOver, gap, homiet, i);
+
                         var idWinRecomend = 0;
                         var idWin = 0;
                         var gapRecomend = 0;
@@ -931,26 +943,22 @@
 
                         if (idWin == idWinRecomend) {
                             var gap = gapWin - gapRecomend;
-                            if(globalIdWin==idWin)
-                            {
-                                gap = gap+globalGap;
+                            if (globalIdWin == idWin) {
+                                gap = gap + globalGap;
                             }
-                            else
-                            {
-                                gap = gap-globalGap;
+                            else {
+                                gap = gap - globalGap;
                             }
                             globalGap = gap;
                             globalIdWin = idWin;
                         }
                         if (idWin != idWinRecomend) {
                             var gap = gapWin + gapRecomend;
-                            if(globalIdWin==idWin)
-                            {
-                                gap = gap+globalGap;
+                            if (globalIdWin == idWin) {
+                                gap = gap + globalGap;
                             }
-                            else
-                            {
-                                gap = gap-globalGap;
+                            else {
+                                gap = gap - globalGap;
                             }
                             globalGap = gap;
                             globalIdWin = idWin;
@@ -996,20 +1004,19 @@
             var resultSmall = parseFloat(temp / 2);
             document.getElementById("homeStatArray").rows[5].cells[0].style.visibility = "visible";
             document.getElementById("homeStatArray").rows[5].cells[2].style.visibility = "visible";
-            if (home == "home"&&resultSmall>0) {
+            if (home == "home" && resultSmall > 0) {
                 document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = resultBig + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = resultSmall + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(resultBig + resultSmall);
             }
-           else if (home == "away"&&resultSmall>0) {
+            else if (home == "away" && resultSmall > 0) {
                 document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = resultSmall + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = resultBig + "</br>--------------";
                 document.getElementById("homeStatArray").rows[5].cells[1].innerHTML += parseInt(resultBig + resultSmall);
             }
-            else
-            {
-                document.getElementById("homeStatArray").rows[5].cells[0].innerHTML="ללא נתונים, משחק ראשון";
-                document.getElementById("homeStatArray").rows[5].cells[2].innerHTML="ללא נתונים, משחק ראשון";
+            else {
+                document.getElementById("homeStatArray").rows[5].cells[0].innerHTML = "ללא נתונים, משחק ראשון";
+                document.getElementById("homeStatArray").rows[5].cells[2].innerHTML = "ללא נתונים, משחק ראשון";
             }
         }
         function getResult2(sumPoints, gap, home, index) {
@@ -1020,15 +1027,14 @@
             var resultBig = parseInt(gap) + parseFloat(temp / 2);
             var resultSmall = parseFloat(temp / 2);
             var x = document.getElementById("gamesPastArray3");
-            if (home == "home"&&resultSmall>0) {
+            if (home == "home" && resultSmall > 0) {
                 x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאה משוערת לפני המשחק:" + "</br>" + resultSmall + "-" + resultBig + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
-             else if (home == "away"&&resultSmall>0) {
+            else if (home == "away" && resultSmall > 0) {
                 x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "תוצאה משוערת לפני המשחק:" + "</br>" + resultBig + "-" + resultSmall + "(" + parseInt(parseInt(resultBig) + parseInt(resultSmall)) + ")" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
-            else
-            {
-                x.rows[x.rows.length - 1 - index].cells[0].innerHTML="ללא נתונים, משחק ראשון"+ "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
+            else {
+                x.rows[x.rows.length - 1 - index].cells[0].innerHTML = "ללא נתונים, משחק ראשון" + "</br>" + x.rows[x.rows.length - 1 - index].cells[0].innerHTML;
             }
 
         }
